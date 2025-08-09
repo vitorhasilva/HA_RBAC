@@ -9,9 +9,8 @@
 
     <style>
 
-      /* TODO do an entities-list */
-      /* Entities-list in the config panel */
-      #entities_configuration > li > ul {
+      /* Permissions tree */
+      #permission_tree > li > ul {
         margin-top: 0.5rem;
       }
 
@@ -50,21 +49,8 @@
             </div>
             <div class="modal-body">
               <div class="row">
-                
-                <div class="col-12 col-lg-6">
-                  
-                  <!-- * All devices -->
-                  <ul class="list-group" id="areas">
-                    
-                  </ul>
-
-                </div>
-
-                <div class="col-12 col-lg-6 mt-3 mt-lg-0">
-                  
-                  <!-- * Devices configuration -->
-                  <ul class="list-group" id="entities_configuration"></ul>
-
+                <div class="col-12">
+                  <ul class="list-group" id="permission_tree"></ul>
                 </div>
               </div>
             </div>
@@ -144,7 +130,6 @@
   <script src="./js/rbac.js"></script>
 <script src="./js/config.js"></script>
 <script src="./js/script.js"></script>
-<script src="./js/area.js"></script>
-<script src="./js/config_entities.js"></script>
+<script src="./js/permission_tree.js"></script>
 
 </html>
