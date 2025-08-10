@@ -1,5 +1,4 @@
-#!/usr/bin/with-contenv bashio
-
+#!/usr/bin/with-contenv sh
 echo "Starting HA RBAC Server..."
-
-python3 main.py
+exec python3 /main.py
+echo "HA RBAC Server started."
