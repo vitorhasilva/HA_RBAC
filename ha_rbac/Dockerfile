@@ -1,19 +1,24 @@
 ARG BUILD_FROM
-FROM $BUILD_FROM
+FROM ${BUILD_FROM}
 
-# Install requirements for add-on
-RUN \
-    apk add --no-cache \
-        python3
+# (opcional) shell mais robusto
+SHELL ["/bin/ash", "-o", "pipefail", "-c"]
 
-# Python 3 HTTP Server serves the current working dir
-# So let's set it to out add-on persistent data directory.
-# WORKDIR /data
+# Instalar bashio + python3 + utilitários
+RUN apk add --no-cache \
+    bashio \
+    python3 \
+    tzdata \
+    curl \
+    jq
 
-# Copy data for add-on
-COPY run.sh /
-COPY main.py /
+# Copiar ficheiros
+COPY run.sh /run.sh
+COPY main.py /main.py
 COPY web /web
+
+# Permissões
 RUN chmod a+x /run.sh
 
+# Arranque
 CMD [ "/run.sh" ]
