@@ -1,3 +1,6 @@
 name: Role-Based Access Control Add-on for Home Assistant
-url: https://github.com/AxelROGET/HA_RBAC
-maintainer: Axel ROGET <axel.roget@gmail.com>
+url: https://github.com/vitorhasilva/HA_RBAC
+maintainer: Axel ROGET <axel.roget@gmail.com> Vitor Silva <vitorsilva10413@gmail.com>
+description: |
+  This add-on provides a role-based access control system for Home Assistant, allowing you to manage user permissions and roles effectively.
+  It is designed to enhance security and streamline user management within your Home Assistant environment.
