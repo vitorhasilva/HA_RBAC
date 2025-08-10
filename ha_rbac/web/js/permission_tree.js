@@ -99,10 +99,10 @@ function buildTreeData() {
     rbac.files.entity_registry.data.entities.forEach(ent => {
         const areaId = ent.area_id || "__no_area__";
         const deviceId = ent.device_id || "__no_device__";
-        if (!tree[areaId]) tree[areaId] = { name: areaId === "__no_area__" ? "(Sem área)" : areaId, devices: {} };
+        if (!tree[areaId]) tree[areaId] = { name: areaId === "__no_area__" ? "(No area)" : areaId, devices: {} };
         const areaNode = tree[areaId];
         if (!areaNode.devices[deviceId]) {
-            const dName = deviceId === "__no_device__" ? "(Sem dispositivo)" : (deviceMap[deviceId] || deviceId);
+            const dName = deviceId === "__no_device__" ? "(No device)" : (deviceMap[deviceId] || deviceId);
             areaNode.devices[deviceId] = { name: dName, entities: [] };
         }
         areaNode.devices[deviceId].entities.push({ id: ent.entity_id, name: ent.original_name || ent.name || ent.entity_id });
