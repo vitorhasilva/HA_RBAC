@@ -92,21 +92,45 @@ function createDropdown(type, id, current) {
 
 function buildTreeData() {
     const tree = {};
+    const areaMap = {};
+
+    rbac.files.area_registry?.data?.areas?.forEach(a => {
+        areaMap[a.id] = a.name || a.id;
+        tree[a.id] = { name: areaMap[a.id], devices: {} };
+    });
+    tree["__no_area__"] = { name: "(No area)", devices: {} };
+
     const deviceMap = {};
     rbac.files.device_registry.data.devices.forEach(d => {
-        deviceMap[d.id] = d.name_by_user || d.name || d.id;
+        const name = d.name_by_user || d.name || d.id;
+        const areaId = d.area_id || "__no_area__";
+        deviceMap[d.id] = { name, area_id: areaId };
+        if (!tree[areaId]) tree[areaId] = { name: areaMap[areaId] || areaId, devices: {} };
+        tree[areaId].devices[d.id] = { name, entities: [] };
     });
+
     rbac.files.entity_registry.data.entities.forEach(ent => {
-        const areaId = ent.area_id || "__no_area__";
         const deviceId = ent.device_id || "__no_device__";
-        if (!tree[areaId]) tree[areaId] = { name: areaId === "__no_area__" ? "(No area)" : areaId, devices: {} };
-        const areaNode = tree[areaId];
-        if (!areaNode.devices[deviceId]) {
-            const dName = deviceId === "__no_device__" ? "(No device)" : (deviceMap[deviceId] || deviceId);
-            areaNode.devices[deviceId] = { name: dName, entities: [] };
+        let areaId = ent.area_id;
+        if (!areaId && deviceId !== "__no_device__") {
+            areaId = deviceMap[deviceId]?.area_id;
         }
-        areaNode.devices[deviceId].entities.push({ id: ent.entity_id, name: ent.original_name || ent.name || ent.entity_id });
+        areaId = areaId || "__no_area__";
+
+        if (!tree[areaId]) {
+            tree[areaId] = { name: areaMap[areaId] || "(No area)", devices: {} };
+        }
+        if (!tree[areaId].devices[deviceId]) {
+            const dName = deviceId === "__no_device__" ? "(No device)" : (deviceMap[deviceId]?.name || deviceId);
+            tree[areaId].devices[deviceId] = { name: dName, entities: [] };
+        }
+
+        tree[areaId].devices[deviceId].entities.push({
+            id: ent.entity_id,
+            name: ent.original_name || ent.name || ent.entity_id
+        });
     });
+
     return tree;
 }
 
